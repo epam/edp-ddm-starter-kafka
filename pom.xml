@@ -12,6 +12,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <java.version>11</java.version>
     <spring.boot.dependencies.version>2.6.1</spring.boot.dependencies.version>
+    <spring-core.version>5.3.23</spring-core.version>
     <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
     <maven.surefire.plugin.version>2.22.2</maven.surefire.plugin.version>
     <sonar.coverage.exclusions>
@@ -28,6 +29,11 @@
         <version>${spring.boot.dependencies.version}</version>
         <type>pom</type>
         <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-core</artifactId>
+        <version>${spring-core.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
