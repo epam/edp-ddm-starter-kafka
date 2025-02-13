@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
@@ -104,6 +105,8 @@ public class KafkaProperties {
   public static class RequestReply {
 
     private boolean enabled;
+    // GroupId must be unique for request-reply for every replica
+    private String groupId = UUID.randomUUID().toString();
     private Map<String, RequestReplyHandler> topics = new HashMap<>();
     private Long timeoutInSeconds = 30L;
 
@@ -113,6 +116,14 @@ public class KafkaProperties {
 
     public void setEnabled(boolean enabled) {
       this.enabled = enabled;
+    }
+
+    public String getGroupId() {
+      return groupId;
+    }
+
+    public void setGroupId(String groupId) {
+      this.groupId = groupId;
     }
 
     public Map<String, RequestReplyHandler> getTopics() {
@@ -177,6 +188,7 @@ public class KafkaProperties {
   }
 
   public static class TopicsRetentionPolicy {
+
     private List<TopicsGroupRetentionPolicy> policies = new ArrayList<>();
     private Integer defaultInDays = 7;
 
@@ -198,6 +210,7 @@ public class KafkaProperties {
   }
 
   public static class TopicsGroupRetentionPolicy {
+
     private List<String> topicPrefixes = new ArrayList<>();
     private Integer days;
 
@@ -219,6 +232,7 @@ public class KafkaProperties {
   }
 
   public static class TopicCreationProperties {
+
     private boolean enabled;
     private boolean enabledDlq;
     private Integer numPartitions;

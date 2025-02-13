@@ -72,10 +72,10 @@ public class KafkaConsumerConfig {
           ConsumerFactory<String, O> consumerFactory,
           Optional<KafkaTemplate<String, O>> kafkaTemplate,
           CommonErrorHandler errorHandler) {
-    ConcurrentKafkaListenerContainerFactory<String, O> factory =
-        new ConcurrentKafkaListenerContainerFactory<>();
+    var factory = new ConcurrentKafkaListenerContainerFactory<String, O>();
     factory.setConsumerFactory(consumerFactory);
     factory.getContainerProperties().setMissingTopicsFatal(false);
+    factory.setConcurrency(kafkaProperties.getConsumer().getConcurrency());
     kafkaTemplate.ifPresent(factory::setReplyTemplate);
     factory.setCommonErrorHandler(errorHandler);
     return factory;

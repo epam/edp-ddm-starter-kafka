@@ -24,7 +24,9 @@ import java.util.List;
 import java.util.Map;
 
 public class KafkaConsumer {
+
   private boolean enabled;
+  private Integer concurrency = 1;
   private Class<?> keyDeserializer = StringDeserializer.class;
   private Class<?> valueDeserializer = StringDeserializer.class;
   private List<String> trustedPackages = new ArrayList<>();
@@ -86,6 +88,14 @@ public class KafkaConsumer {
 
   public void setCustomConfig(Map<String, Object> customConfig) {
     this.customConfig = customConfig;
+  }
+
+  public Integer getConcurrency() {
+    return concurrency;
+  }
+
+  public void setConcurrency(Integer concurrency) {
+    this.concurrency = concurrency;
   }
 
   public static class ErrorHandler {

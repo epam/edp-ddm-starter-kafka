@@ -26,7 +26,6 @@ import org.springframework.kafka.listener.ConcurrentMessageListenerContainer;
 import org.springframework.kafka.requestreply.ReplyingKafkaTemplate;
 
 import java.time.Duration;
-import java.util.UUID;
 
 @ConditionalOnProperty(
     prefix = "data-platform.kafka.request-reply",
@@ -52,7 +51,8 @@ public class KafkaRequestReplyConfig {
     ConcurrentMessageListenerContainer<String, O> replyContainer =
         concurrentKafkaListenerContainerFactory.createContainer(outboundTopics);
     replyContainer.getContainerProperties().setMissingTopicsFatal(false);
-    replyContainer.getContainerProperties().setGroupId(UUID.randomUUID().toString());
+    replyContainer.getContainerProperties()
+        .setGroupId(kafkaProperties.getRequestReply().getGroupId());
     ReplyingKafkaTemplate<String, I, O> kafkaTemplate =
         new ReplyingKafkaTemplate<>(producerFactory, replyContainer);
     kafkaTemplate.setSharedReplyTopic(true);
